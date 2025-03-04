@@ -1,0 +1,39 @@
+<div class="container">
+  <h1>Course Recommendation System</h1>
+  <form [formGroup]="recommendationForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Interests</mat-label>
+      <input matInput formControlName="interests" placeholder="e.g., Machine Learning, Data Science" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Current Degree</mat-label>
+      <mat-select formControlName="degree">
+        <mat-option value="High School">High School</mat-option>
+        <mat-option value="Bachelor's">Bachelor's</mat-option>
+        <mat-option value="Master's">Master's</mat-option>
+        <mat-option value="PhD">PhD</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Learning Goals</mat-label>
+      <input matInput formControlName="goals" placeholder="e.g., Career Advancement, Skill Development" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Get Recommendations</button>
+  </form>
+
+  <div *ngIf="recommendations.length > 0" class="recommendations">
+    <h2>Recommended Courses</h2>
+    <mat-card *ngFor="let course of recommendations">
+      <mat-card-header>
+        <mat-card-title>{{ course.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ course.description }}</p>
+        <a *ngIf="course.link" [href]="course.link" target="_blank">Learn More</a>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
