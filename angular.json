@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "course-recommendation-system": {
+    "course-recommendation": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/course-recommendation-system",
+            "outputPath": "dist/course-recommendation",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -31,7 +31,7 @@
             ],
             "scripts": [],
             "server": "src/main.server.ts",
-            "outputMode": "server",
+            "prerender": true,
             "ssr": {
               "entry": "src/server.ts"
             }
@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "course-recommendation-system:build:production"
+              "buildTarget": "course-recommendation:build:production"
             },
             "development": {
-              "buildTarget": "course-recommendation-system:build:development"
+              "buildTarget": "course-recommendation:build:development"
             }
           },
           "defaultConfiguration": "development"

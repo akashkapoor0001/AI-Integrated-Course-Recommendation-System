@@ -1,0 +1,20 @@
+<!-- <div class="login-container">
+    <h2>Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <input type="text" formControlName="username" placeholder="Enter your name">
+      <button type="submit">Login</button>
+    </form>
+  </div>
+   -->
+
+   <div class="login-container">
+    <h2>Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <input class="input-field" type="email" placeholder="Email" formControlName="email" />
+      <input class="input-field" type="password" placeholder="Password" formControlName="password" />
+      <button class="login-btn" type="submit">Login</button>
+    </form>
+    <p class="forgot-password">Forgot password?</p>
+  </div>
+  
+  

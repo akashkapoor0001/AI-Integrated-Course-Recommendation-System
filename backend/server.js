@@ -8,52 +8,36 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
-// Root route to test server is running
-app.get('/', (req, res) => {
-  res.send('Hey! Server is running.');
-});
-
 app.post('/recommend', async (req, res) => {
-  const { interests, degree, goals } = req.body;
+  const { interests, degree, cgpa, level } = req.body;
 
-  const prompt = `Recommend 5 courses for a student with interests in ${interests}, currently pursuing a ${degree}, and aiming to ${goals}. Provide course titles, descriptions, and links if available.`;
+  const prompt = `Recommend 5 courses for a student interested in ${interests}, pursuing a ${degree}, with a CGPA of ${cgpa}, at ${level} level. Provide course titles, descriptions, and links.`;
 
   try {
     const response = await axios.post(
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent', // Update the model name
-        {
-          contents: [
-            {
-              parts: [{ text: prompt }],
-            },
-          ],
+      'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent',
+      {
+        contents: [{ parts: [{ text: prompt }] }],
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': 'AIzaSyAsvqUBWEwu955FkE-lSssABxjzz-MJC-c',
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'x-goog-api-key': 'AIzaSyAsvqUBWEwu955FkE-lSssABxjzz-MJC-c', // Replace with your actual API key
-          },
-        }
-      );
-      
+      }
+    );
 
-    if (response.data?.candidates?.length > 0) {
-      const textResponse = response.data.candidates[0]?.content?.parts[0]?.text || '';
+    const courses = response.data.candidates[0].content.parts[0].text
+      .split('\n')
+      .filter((line) => line.trim())
+      .map((line) => {
+        const [title, description] = line.split(': ');
+        return { title, description };
+      });
 
-      const courses = textResponse
-        .split('\n')
-        .filter((line) => line.trim())
-        .map((line) => {
-          const [title, description] = line.split(': ');
-          return { title: title?.trim(), description: description?.trim() || 'No description available' };
-        });
-
-      res.json({ courses });
-    } else {
-      res.status(500).json({ error: 'Invalid response from AI API' });
-    }
+    res.json({ courses });
   } catch (error) {
-    console.error('Error calling Google Generative AI API:', error.response?.data || error.message);
+    console.error('Error calling Google Generative AI API:', error);
     res.status(500).json({ error: 'Failed to fetch recommendations' });
   }
 });

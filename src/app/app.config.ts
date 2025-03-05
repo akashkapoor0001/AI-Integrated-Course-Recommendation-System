@@ -1,14 +1,12 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
+import { routes } from './app.routes';  // ✅ Import correctly
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms'; // ✅ Import FormsModule here
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideRouter([]),
-    provideAnimations(),
-    importProvidersFrom(HttpClientModule),
-    importProvidersFrom(ReactiveFormsModule),
-  ],
+  providers: [provideRouter(routes),
+    provideHttpClient(withInterceptors([])),
+    FormsModule,
+  ]
 };

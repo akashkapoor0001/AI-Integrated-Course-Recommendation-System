@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'course-recommendation-system' title`, () => {
+  it(`should have the 'course-recommendation' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('course-recommendation-system');
+    expect(app.title).toEqual('course-recommendation');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, course-recommendation-system');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, course-recommendation');
   });
 });

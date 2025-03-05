@@ -1,0 +1,31 @@
+<h2>Get Course Recommendations</h2>
+<form [formGroup]="recommendForm" (ngSubmit)="onSubmit()">
+  <label>Interests:</label>
+  <input type="text" formControlName="interests" placeholder="E.g. Machine Learning, C++" />
+
+  <label>Degree:</label>
+  <input type="text" formControlName="degree" placeholder="E.g. B.Tech, B.Sc" />
+
+  <label>CGPA:</label>
+  <input type="number" formControlName="cgpa" placeholder="E.g. 8.5" />
+
+  <label>Level:</label>
+  <div>
+    <input type="radio" formControlName="level" value="beginner" /> Beginner
+    <input type="radio" formControlName="level" value="advanced" /> Advanced
+  </div>
+
+  <button type="submit" [disabled]="isLoading">Recommend Courses</button>
+</form>
+
+<div *ngIf="isLoading">Loading recommendations...</div>
+<div *ngIf="errorMessage">{{ errorMessage }}</div>
+
+<div *ngIf="recommendedCourses.length > 0">
+  <h3>Recommended Courses</h3>
+  <ul>
+    <li *ngFor="let course of recommendedCourses">
+      <strong>{{ course.title }}</strong>: {{ course.description }}
+    </li>
+  </ul>
+</div>
