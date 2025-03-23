@@ -11,7 +11,7 @@ app.use(express.json());
 app.post('/recommend', async (req, res) => {
   const { interests, degree, cgpa, level } = req.body;
 
-  const prompt = `Recommend 5 courses for a student interested in ${interests}, pursuing a ${degree}, with a CGPA of ${cgpa}, at ${level} level. Provide course titles, descriptions, and links.`;
+  const prompt = `Recommend 5 courses for a student interested in ${interests}, pursuing a ${degree}, with a CGPA of ${cgpa}, at ${level} level. considering the details, Provide course titles, descriptions, and links to the course.`;
 
   try {
     const response = await axios.post(
